@@ -1,0 +1,122 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+/* -------------------------
+   KEYFRAMES (outside @theme)
+------------------------- */
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes linear-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* -------------------------
+   THEME (Only Variables)
+------------------------- */
+@theme {
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --color-slate-950: #0B1120;
+
+  --animate-blob: blob 7s infinite;
+  --animate-linear-x: linear-x 3s ease infinite;
+}
+
+/* -------------------------
+   BASE
+------------------------- */
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 
+           antialiased selection:bg-blue-500 selection:text-white overflow-x-hidden;
+  }
+}
+
+/* -------------------------
+   COMPONENTS
+------------------------- */
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/80 dark:bg-[#1e293b]/60 
+           border border-white/50 dark:border-slate-700/50 
+           shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)]
+           rounded-3xl transition-all duration-300;
+  }
+  
+  .glass-card:hover {
+    @apply border-blue-500/30 dark:border-blue-400/30 
+           shadow-[0_8px_30px_rgba(59,130,246,0.1)];
+  }
+
+  .linear-text {
+    @apply bg-clip-text text-transparent bg-linear-to-r from-blue-600 via-purple-600 to-cyan-500 
+           font-extrabold animate-linear-x;
+    background-size: 200% 200%;
+  }
+
+  .btn-primary {
+    @apply bg-linear-to-r from-blue-600 to-cyan-600 text-white font-bold py-3 px-6 rounded-xl 
+           shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 
+           transform hover:-translate-y-0.5 transition-all duration-300;
+  }
+}
+
+/* -------------------------
+   UTILITIES
+------------------------- */
+@layer utilities {
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+}
+
+/* -------------------------
+   SCROLLBAR (Pure CSS)
+------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(203 213 225); /* slate-300 */
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(148 163 184); /* slate-400 */
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgb(51 65 85); /* slate-700 */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(71 85 105); /* slate-600 */
+}
+
+/* Date Picker Fix */
+.dark ::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
